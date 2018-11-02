@@ -7,11 +7,14 @@ public final class Test extends Color implements Runnable, Comparable<Test>
 	private final static int c = 6;
 	double b = 3.4244;
 	int[][] k;
+	@Deprecated
 	final String s = "Hello World";
+	@Urmom
 	Object o = new Object();
 	String q = "SDS";
 	final double PI = 3.1415926535897;
-	final boolean TEST = true;	
+	final boolean TEST = true;
+	volatile transient boolean r;
 
 	public Test(ColorSpace cspace, float[] components, float alpha)
 	{

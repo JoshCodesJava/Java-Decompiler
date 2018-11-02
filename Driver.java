@@ -85,26 +85,26 @@ public class Driver
 		for(int i = 0; i < numOfFields; i++)
 		{
 			int modifiers = in.readUnsignedShort();
-			String identifier = "\t";
+			String initialization = "\t";
 			
 			if((modifiers & ACC_PUBLIC) != 0)
-				identifier+="public ";
+				initialization+="public ";
 			if((modifiers & ACC_PRIVATE) != 0)
-				identifier+="private ";
+				initialization+="private ";
 			if((modifiers & ACC_PROTECTED) != 0) 
-				identifier+="protected ";
+				initialization+="protected ";
 			if((modifiers & ACC_STATIC) != 0)
-				identifier+="static ";
+				initialization+="static ";
 			if((modifiers & ACC_FINAL) != 0)
-				identifier+="final ";
+				initialization+="final ";
 			if((modifiers & ACC_VOLATILE) != 0)
-				identifier+="volatile ";
+				initialization+="volatile ";
 			if((modifiers & ACC_TRANSIENT) != 0)
-				identifier+="transient ";
+				initialization+="transient ";
 
 			String idName = (String) pool.getEntry(in.readUnsignedShort()).getArgs()[0];
 			String descriptor = (String) pool.getEntry(in.readUnsignedShort()).getArgs()[0];
-			System.out.print(identifier + parseName(Utility.parseFieldName(descriptor)) + " " + idName);
+			initialization = initialization + parseName(Utility.parseFieldName(descriptor)) + " " + idName;
 			int attributes = in.readUnsignedShort();
 			
 			for(int j = 0; j < attributes; j++)
@@ -122,20 +122,20 @@ public class Driver
 					switch(entry.getType())
 					{
 					case ConstantPool.CONSTANT_Long:
-						System.out.print(" = "+Utility.buildLong(entry.getArgs()));
+						initialization+=" = "+Utility.buildLong(entry.getArgs());
 						break;
 					case ConstantPool.CONSTANT_Float:
-						System.out.print(" = "+Utility.buildFloat(entry.getArgs()));
+						initialization+=" = "+Utility.buildFloat(entry.getArgs());
 						break;
 					case ConstantPool.CONSTANT_Double:
-						System.out.print(" = "+Utility.buildDouble(entry.getArgs()));
+						initialization+=" = "+Utility.buildDouble(entry.getArgs());
 						break;
 					case ConstantPool.CONSTANT_Integer:
 						int val = Utility.buildInteger(entry.getArgs());
-						System.out.print(" = " + (descriptor.equals("Z") ? (val == 0 ? "false" : "true") : val));
+						initialization+=" = " + (descriptor.equals("Z") ? (val == 0 ? "false" : "true") : val);
 						break;
 					case ConstantPool.CONSTANT_String:
-						System.out.print(" = \"" + pool.getEntry((int) entry.getArgs()[0]).getArgs()[0] + "\"");
+						initialization+=" = \"" + pool.getEntry((int) entry.getArgs()[0]).getArgs()[0] + "\"";
 						break;
 					}
 				
@@ -143,7 +143,8 @@ public class Driver
 				}
 			}
 			
-			System.out.println(";");
+			initialization+=';';
+			System.out.println(initialization);
 		}
 	}
 
